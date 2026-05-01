@@ -14,6 +14,7 @@ repositories {
 dependencies {
     implementation(libs.asm)
     testImplementation(libs.junit.jupiter)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<JavaCompile> {
