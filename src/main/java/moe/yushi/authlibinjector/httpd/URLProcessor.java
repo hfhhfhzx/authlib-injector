@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -183,7 +183,7 @@ public class URLProcessor {
 
 		log(DEBUG, "Reverse proxy: > " + method + " " + url + ", headers: " + requestHeaders);
 
-		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
+		HttpURLConnection conn = (HttpURLConnection) URI.create(url).toURL().openConnection();
 		conn.setRequestMethod(method);
 		conn.setDoOutput(clientIn != null);
 		requestHeaders.forEach(conn::setRequestProperty);

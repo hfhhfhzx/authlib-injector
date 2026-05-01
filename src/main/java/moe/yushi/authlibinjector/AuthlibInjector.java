@@ -32,6 +32,8 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.lang.instrument.Instrumentation;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -149,11 +151,16 @@ public final class AuthlibInjector {
 		} else {
 
 			try {
-				HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+				HttpURLConnection connection = (HttpURLConnection) URI.create(apiUrl).toURL().openConnection();
 
 				String ali = connection.getHeaderField("x-authlib-injector-api-location");
 				if (ali != null) {
-					URL absoluteAli = new URL(connection.getURL(), ali);
+					URL absoluteAli;
+					try {
+					    absoluteAli = connection.getURL().toURI().resolve(ali).toURL();
+					} catch (URISyntaxException e) {
+					    throw new IOException(e);
+					}
 					if (!urlEqualsIgnoreSlash(apiUrl, absoluteAli.toString())) {
 
 						// usually the URL that ALI points to is on the same host

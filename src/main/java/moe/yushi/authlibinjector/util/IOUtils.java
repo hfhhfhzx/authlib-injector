@@ -24,7 +24,7 @@ import java.io.OutputStream;
 import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.Proxy;
-import java.net.URL;
+import java.net.URI;
 
 public final class IOUtils {
 
@@ -33,9 +33,9 @@ public final class IOUtils {
 
 	private static HttpURLConnection createConnection(String url, Proxy proxy) throws IOException {
 		if (proxy == null) {
-			return (HttpURLConnection) new URL(url).openConnection();
+			return (HttpURLConnection) URI.create(url).toURL().openConnection();
 		} else {
-			return (HttpURLConnection) new URL(url).openConnection(proxy);
+			return (HttpURLConnection) URI.create(url).toURL().openConnection(proxy);
 		}
 	}
 

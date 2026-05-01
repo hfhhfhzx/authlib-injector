@@ -20,6 +20,7 @@ import static org.objectweb.asm.Opcodes.ALOAD;
 import static org.objectweb.asm.Opcodes.ARETURN;
 import static org.objectweb.asm.Opcodes.ASM9;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Optional;
 import org.objectweb.asm.ClassVisitor;
@@ -36,11 +37,8 @@ public class ConcatenateURLTransformUnit implements TransformUnit {
 	@CallbackMethod
 	public static URL concatenateURL(URL url, String query) {
 		try {
-			if (url.getQuery() != null && url.getQuery().length() > 0) {
-				return new URL(url.getProtocol(), url.getHost(), url.getPort(), url.getFile() + "&" + query);
-			} else {
-				return new URL(url.getProtocol(), url.getHost(), url.getPort(), url.getFile() + "?" + query);
-			}
+			String separator = (url.getQuery() != null && !url.getQuery().isEmpty()) ? "&" : "?";
+			return URI.create(url.toString() + separator + query).toURL();
 		} catch (MalformedURLException ex) {
 			throw new IllegalArgumentException("Could not concatenate given URL with GET arguments!", ex);
 		}

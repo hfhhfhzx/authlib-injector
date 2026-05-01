@@ -1,0 +1,13 @@
+[versions]
+asm = "9.9.1"
+git-version = "5.0.0"
+junit-jupiter = "6.0.3"
+shadow = "9.4.1"
+
+[libraries]
+asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+
+[plugins]
+gradleup-shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+palantir-git-version = { id = "com.palantir.git-version", version.ref = "git-version" }
