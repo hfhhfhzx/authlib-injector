@@ -2,7 +2,7 @@
 asm = "9.9.1"
 git-version = "5.0.0"
 junit-jupiter = "6.0.3"
-shadow = "9.4.1"
+shadow = "9.6.1"
 
 [libraries]
 asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
