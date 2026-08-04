@@ -22,8 +22,11 @@ tasks.withType<JavaCompile> {
     options.isDeprecation = true
 }
 
-val gitVersion: groovy.lang.Closure<String> by extra
-val versionDetails: groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails> by extra
+@Suppress("UNCHECKED_CAST")
+val gitVersion = extra["gitVersion"] as groovy.lang.Closure<String>
+
+@Suppress("UNCHECKED_CAST")
+val versionDetails = extra["versionDetails"] as groovy.lang.Closure<com.palantir.gradle.gitversion.VersionDetails>
 
 val buildNumber = System.getenv("AI_BUILD_NUMBER")
 val gitInfo = versionDetails()
